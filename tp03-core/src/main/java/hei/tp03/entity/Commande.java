@@ -1,9 +1,6 @@
 package hei.tp03.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -15,8 +12,14 @@ public class Commande {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @Column(name="validee")
     private boolean validee;
+
+    @ManyToOne
     private Client client;
+
+    @OneToMany(cascade={CascadeType.ALL}, mappedBy="commande")
     private List<Produit> produits;
 
     public Commande(Client client) {
@@ -24,5 +27,9 @@ public class Commande {
     }
 
     public Commande() {
+    }
+
+    public void setProduits(List<Produit> produits) {
+        this.produits = produits;
     }
 }

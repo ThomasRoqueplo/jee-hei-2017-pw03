@@ -1,9 +1,6 @@
 package hei.tp03.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -15,8 +12,14 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @Column(name="nom")
     private String nom;
+
+    @Column(name="prenom")
     private String prenom;
+
+    @OneToMany(cascade={CascadeType.ALL}, mappedBy="client")
     private List<Commande> commandes;
 
     public Client() {
@@ -26,5 +29,13 @@ public class Client {
     public Client(String nom, String prenom) {
         this.prenom = prenom;
         this.nom = nom;
+    }
+
+    public void setCommandes(List<Commande> commandes) {
+        this.commandes = commandes;
+    }
+
+    public String getNom() {
+        return nom;
     }
 }
